@@ -4,23 +4,16 @@ f = open(FILE, "r")
 lines = f.readlines()
 
 
-N = int(len(lines[0])/4)
+first_rearrange = lines.index("\n")
+N = len(lines[0]) // 4
 orig_sts = [[] for _ in range(N)]
-for i, line in enumerate(lines):
-    if line.startswith(' 1'):
-        continue
-    if line == "\n":
-        first_rearrange = i
-        break
-    for st in range(0, len(line)-1, 4):
-        orig_sts[int(st/4)].append(line[st+1])
+for i, line in enumerate(lines[:first_rearrange-1]):
+    for st, ch in enumerate(line[1::4]):
+        if ch != ' ':
+            orig_sts[st].append(ch)
 
 for i in range(N):
     orig_sts[i].reverse()
-    try:
-        j = orig_sts[i].index(' ')
-        orig_sts[i] = orig_sts[i][:j]
-    except: pass
 
 
 def solve(is_part1):

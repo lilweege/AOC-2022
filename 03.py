@@ -18,7 +18,7 @@ def score(un):
 def part1():
     tot = 0
     for s in map(str.strip, lines):
-        h = int(len(s)/2)
+        h = len(s) // 2
         tot += score(set(s[h:]) & set(s[:h]))
 
     print(tot)

@@ -18,9 +18,7 @@ for s in f.readlines():
     x = points[p2]
     if p1 == p2:
         x += 3
-    elif (p2 == 'R' and p1 == 'S') or\
-            (p2 == 'P' and p1 == 'R') or\
-            (p2 == 'S' and p1 == 'P'):
+    elif win[p2] == p1:
         x += 6
     ans1 += x
 
