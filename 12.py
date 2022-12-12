@@ -1,4 +1,4 @@
-from heapq import heapify, heappush, heappop
+from collections import deque
 FILE = "input/12.txt"
 # FILE = "sample.txt"
 f = open(FILE, "r")
@@ -20,27 +20,30 @@ for i in range(N):
             starts.append((i, j))
 
 
-def dijk(start_coords):
+def bfs(start_coords):
     vis = set()
-    pq = [(0, si, sj) for si, sj in start_coords]
-    heapify(pq)
+    q = deque(start_coords)
+    step = 0
+    while q:
+        d = deque()
+        while q:
+            ci, cj = q.popleft()
+            if (ci, cj) in vis:
+                continue
+            vis.add((ci, cj))
 
-    while pq:
-        n, ci, cj = heappop(pq)
-        if (ci, cj) in vis:
-            continue
-        vis.add((ci, cj))
+            if (ci, cj) == (ei, ej):
+                print(step)
+                return
 
-        if (ci, cj) == (ei, ej):
-            print(n)
-            break
-
-        x = ord(grid[ci][cj])
-        for di, dj in (1, 0), (0, 1), (-1, 0), (0, -1):
-            if 0 <= ci+di < N and 0 < cj+dj < M:
-                if x + 1 >= ord(grid[ci+di][cj+dj]):
-                    heappush(pq, (n+1, ci+di, cj+dj))
+            x = ord(grid[ci][cj])
+            for di, dj in (1, 0), (0, 1), (-1, 0), (0, -1):
+                if 0 <= ci+di < N and 0 < cj+dj < M:
+                    if x + 1 >= ord(grid[ci+di][cj+dj]):
+                        d.append((ci+di, cj+dj))
+        step += 1
+        q = d
 
 
-dijk(start_coords=[(si, sj)])
-dijk(start_coords=starts)
+bfs(start_coords=[(si, sj)])
+bfs(start_coords=starts)
