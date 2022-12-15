@@ -22,6 +22,8 @@ for line in lines:
 floor += 2
 
 
+# FIXME: This is slow...
+# BFS, DFS, or even CA would work for part 2
 def solve(is_part1):
     filled = filled_orig.copy()
 
